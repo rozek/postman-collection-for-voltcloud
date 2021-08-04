@@ -54,14 +54,16 @@ In principle, you may submit the listed requests one after another - usually, fo
 * **update application**<br>this request changes one or multiple settings for an application given by its id. In this example, the request simply changes the application's name to something beginning with "postman-" and ending with a series of digits (denoting the crrent time stamp)
 * **upload application**<br>after creation, an application is still "empty", i.e., it contains no code. This request allows a developer to upload a ZIP archive containing all files that make up the actual application - including an `index.html` needed as the application's entry point. In this example, the ZIP archive just contains a simple dummy HTML file
 * **inspect application**<br>submit this request in order to get a summary of the settings for a single registered application, given by its id
-* **delete application**<br>this request unregisters a still registered application given by its id, but only if there are no customers associated with this application (otherwise you will have to delete every customer first). At the same time, any entries of the associated key-value store will also be removed. Note: this request is *not idempotent* - trying to delete an already deleted application will result in an error
+* **delete application**<br>this request unregisters a still registered application given by its id, but only if there are no more customers associated with this application (otherwise you will have to delete every customer first). At the same time, any entries of the associated key-value store will also be removed. Note: this request is *not idempotent* - trying to delete a non-existing application will result in an error
 
 #### Application Storage Management ####
 
-* **list application storage entries**<br>
-* **create or update application storage entry**<br>
-* **get application storage entry**<br>
-* **delete application storage entry**<br>
+Every application is associated with a key-value store, whose entries may be created, read, written and deleted by the developer but only read by the application's customers. The following requests are those for the developer:
+
+* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all keys of the application store and their associated values
+* **create or update application storage entry**<br>this request associates a given value (a string) with a given key in the application's key-value store - if the specfied entry does not exist, it will be created 
+* **get application storage entry**<br>this request responds with a JSON string containing the value of a specific entry in the application's key-value store (given by its key). Trying to get the value of a non-existing key will result in an error
+* **delete application storage entry**<br>this requets deletes an entry (given by its key) from the application's key-value store. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
 
 #### Customer Management ####
 
