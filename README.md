@@ -43,7 +43,7 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 #### Login ####
 
-* **login**<br>
+* **login developer**<br>
 
 #### Application Management ####
 
