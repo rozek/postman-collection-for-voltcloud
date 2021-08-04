@@ -37,7 +37,7 @@ Now select the imported collection and navigate to tab "Variables". The variable
 
 ## Requests ##
 
-The requests found in this collection are grouped into those used by an application developer (who is also allowed to manage his/her customers and their key-value stores) and those used by a customer of a given application him/herself (which normally means that the application performs any requests on behalf of the - previously logged-in - customer)
+The requests found in this collection are grouped into those used by an application developer (who is also allowed to manage his/her customers and their key-value stores) and those used by a customer of a given application (which normally means that the application performs any requests on behalf of the - previously logged-in - customer)
 
 In principle, you may submit the listed requests one after another - usually, former requests collect any information needed for later ones.
 
