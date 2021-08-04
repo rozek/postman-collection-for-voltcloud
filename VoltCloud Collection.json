@@ -1,0 +1,1825 @@
+{
+	"info": {
+		"_postman_id": "02318103-c1f9-4a56-af8b-1e6c4fff0781",
+		"name": "VoltCloud Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "for Developers",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "login developer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let Response = pm.response.json()",
+											"",
+											"  pm.collectionVariables.set('developer_access_token', Response.access_token)",
+											"  pm.collectionVariables.set('developer_id',           Response.user_id)",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{developer_email_address}}\",\n  \"password\": \"{{developer_password}}\",\n  \"scope\": \"RpYCMN\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dashboard_url}}/api/auth/login",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Application Management",
+					"item": [
+						{
+							"name": "list applications",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let ApplicationList = pm.response.json()",
+											"",
+											"  for (let i = 0, l = ApplicationList.length; i < l; i++) {",
+											"    let ApplicationInfo = ApplicationList[i]",
+											"    if (ApplicationInfo.subdomain.startsWith('postman-')) {",
+											"      pm.collectionVariables.set('application_url', ApplicationInfo.url)",
+											"      pm.collectionVariables.set('application_id',  ApplicationInfo.id)",
+											"      return",
+											"    }",
+											"  }",
+											"",
+											"  pm.collectionVariables.set('application_url', '')",
+											"  pm.collectionVariables.set('application_id',  '')",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/app?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "inspect application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/app/{{application_id}}?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app",
+										"{{application_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "create new application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"  let ApplicationInfo = pm.response.json()",
+											"",
+											"  pm.collectionVariables.set('application_url', ApplicationInfo.url)",
+											"  pm.collectionVariables.set('application_id',  ApplicationInfo.id)",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/app",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "update application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let ApplicationInfo = pm.response.json()",
+											"  pm.collectionVariables.set('application_url', ApplicationInfo.url)",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"subdomain\": \"postman-{{$timestamp}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dashboard_url}}/api/app/{{application_id}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app",
+										"{{application_id}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "upload application",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"contentType": "application/zip",
+											"type": "file",
+											"src": "/Users/andreas/Downloads/Postman-Dummy.zip"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dashboard_url}}/api/app/{{application_id}}/version",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app",
+										"{{application_id}}",
+										"version"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "delete application (only if w/o users)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/app/{{application_id}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app",
+										"{{application_id}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Application Storage Management",
+					"item": [
+						{
+							"name": "list application storage entries",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let StorageSet = pm.response.json()",
+											"  for (let Key in StorageSet) {",
+											"    if (StorageSet.hasOwnProperty(Key)) {",
+											"      pm.collectionVariables.set('application_storage_key', Key)",
+											"      return",
+											"    }",
+											"  }",
+											"  pm.collectionVariables.set('application_storage_key', 'application-test')",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{application_id}}?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "create or set application storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"set at {{$timestamp}}\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{application_id}}/key/{{application_storage_key}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}",
+										"key",
+										"{{application_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "get application storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{application_id}}/key/{{application_storage_key}}?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}",
+										"key",
+										"{{application_storage_key}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "delete application storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{application_id}}/key/{{application_storage_key}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}",
+										"key",
+										"{{application_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer Management (Application-specific)",
+					"item": [
+						{
+							"name": "list customers",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let CustomerEMailAddress = pm.collectionVariables.get('customer_email_address') || ''",
+											"",
+											"  let CustomerList = pm.response.json()",
+											"  if ((CustomerList.length > 0) && (CustomerEMailAddress !== '')) {",
+											"    for (let i = 0, l = CustomerList.length; i < l; i++) {",
+											"      if (CustomerList[i].email === CustomerEMailAddress) {",
+											"        pm.collectionVariables.set('customer_id', CustomerList[i].id)",
+											"        return",
+											"      }",
+											"    }",
+											"",
+											"    pm.collectionVariables.set('customer_id',            CustomerList[0].id)",
+											"    pm.collectionVariables.set('customer_email_address', CustomerList[0].email)",
+											"  }",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/app/{{application_id}}/users?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"app",
+										"{{application_id}}",
+										"users"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "register customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 201) {",
+											"  let Response = pm.response.json()",
+											"  pm.collectionVariables.set('customer_id', Response.id)",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{customer_email_address}}\",\n  \"password\": \"{{customer_password}}\",\n  \"confirmation\": \"{{customer_confirmation}}\",\n  \"scope\": \"{{application_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/register",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "resend customer confirmation email",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{customer_email_address}}\",\n  \"scope\": \"{{application_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/resend",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"resend"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "confirm customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"token\": \"{{customer_confirmation_token}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/confirm",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"confirm"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "start customer password reset",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{customer_email_address}}\",\n  \"scope\": \"{{application_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/forgot",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"forgot"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "reset customer password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"token\": \"{{customer_reset_token}}\",\n  \"password\": \"{{customer_password}}\",\n  \"confirmation\": \"{{customer_confirmation}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/reset",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"reset"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let CustomerEMailAddress = pm.collectionVariables.get('customer_email_address') || ''",
+											"",
+											"  let CustomerList = pm.response.json()",
+											"  if ((CustomerList.length > 0) && (CustomerEMailAddress !== '')) {",
+											"    for (let i = 0, l = CustomerList.length; i < l; i++) {",
+											"      if (CustomerList[i].email === CustomerEMailAddress) {",
+											"        pm.collectionVariables.set('customer_id', CustomerList[i].id)",
+											"        return",
+											"      }",
+											"    }",
+											"  }",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/user/{{customer_id}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer Storage Management  (Application-specific)",
+					"item": [
+						{
+							"name": "list customer storage entries",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let StorageSet = pm.response.json()",
+											"  for (let Key in StorageSet) {",
+											"    if (StorageSet.hasOwnProperty(Key)) {",
+											"      pm.collectionVariables.set('customer_storage_key', Key)",
+											"      return",
+											"    }",
+											"  }",
+											"  pm.collectionVariables.set('customer_storage_key', 'customer-test')",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{customer_id}}?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "create or set customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"set at {{$timestamp}}\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "get customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}?_={{$timestamp}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "delete customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{developer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{dashboard_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}",
+									"host": [
+										"{{dashboard_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "for Customers (Application-specific)",
+			"item": [
+				{
+					"name": "Login",
+					"item": [
+						{
+							"name": "login customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let Response = pm.response.json()",
+											"",
+											"  pm.collectionVariables.set('customer_access_token', Response.access_token)",
+											"  pm.collectionVariables.set('customer_id',           Response.user_id)",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"grant_type\": \"password\",\n  \"username\": \"{{customer_email_address}}\",\n  \"password\": \"{{customer_password}}\",\n  \"scope\": \"{{application_id}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/auth/login",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account Management",
+					"item": [
+						{
+							"name": "get customer settings",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/user/{{customer_id}}?_={{$timestamp}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change customer email address",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"{{customer_email_address}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/user/{{customer_id}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change customer password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"password\": {\n    \"old\": \"{{customer_password}}\",\n    \"new\": \"{{customer_password}}\",\n    \"confirmation\": \"{{customer_confirmation}}\"\n  }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/user/{{customer_id}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "change customer name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"first_name\": \"john\",\n  \"last_name\": \"doe\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/user/{{customer_id}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/user/{{customer_id}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"user",
+										"{{customer_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Application Storage Management",
+					"item": [
+						{
+							"name": "list application storage entries",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let StorageSet = pm.response.json()",
+											"  for (let Key in StorageSet) {",
+											"    if (StorageSet.hasOwnProperty(Key)) {",
+											"      pm.collectionVariables.set('application_storage_key', Key)",
+											"      return",
+											"    }",
+											"  }",
+											"  pm.collectionVariables.set('application_storage_key', 'application-test')",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{application_id}}?_={{$timestamp}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "get application storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{application_id}}/key/{{application_storage_key}}?_={{$timestamp}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{application_id}}",
+										"key",
+										"{{application_storage_key}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer Storage Management",
+					"item": [
+						{
+							"name": "list customer storage entries",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let StorageSet = pm.response.json()",
+											"  for (let Key in StorageSet) {",
+											"    if (StorageSet.hasOwnProperty(Key)) {",
+											"      pm.collectionVariables.set('customer_storage_key', Key)",
+											"      return",
+											"    }",
+											"  }",
+											"  pm.collectionVariables.set('customer_storage_key', 'customer-test')",
+											"}",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{customer_id}}?_={{$timestamp}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "create or set customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\"set at {{$timestamp}}\"",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "get customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}?_={{$timestamp}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									],
+									"query": [
+										{
+											"key": "_",
+											"value": "{{$timestamp}}"
+										}
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						},
+						{
+							"name": "delete customer storage entry",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{customer_id}}/key/{{customer_storage_key}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}",
+										"key",
+										"{{customer_storage_key}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "dashboard_url",
+			"value": "https://dashboard.voltcloud.io"
+		},
+		{
+			"key": "developer_id",
+			"value": ""
+		},
+		{
+			"key": "developer_email_address",
+			"value": ""
+		},
+		{
+			"key": "developer_password",
+			"value": ""
+		},
+		{
+			"key": "developer_access_token",
+			"value": ""
+		},
+		{
+			"key": "application_url",
+			"value": ""
+		},
+		{
+			"key": "application_id",
+			"value": ""
+		},
+		{
+			"key": "application_storage_key",
+			"value": ""
+		},
+		{
+			"key": "customer_id",
+			"value": ""
+		},
+		{
+			"key": "customer_email_address",
+			"value": ""
+		},
+		{
+			"key": "customer_password",
+			"value": ""
+		},
+		{
+			"key": "customer_confirmation",
+			"value": ""
+		},
+		{
+			"key": "customer_confirmation_token",
+			"value": ""
+		},
+		{
+			"key": "customer_reset_token",
+			"value": ""
+		},
+		{
+			"key": "customer_access_token",
+			"value": ""
+		},
+		{
+			"key": "customer_storage_key",
+			"value": ""
+		}
+	]
+}
