@@ -39,7 +39,7 @@ The requests found in this collection are grouped into those used by an applicat
 
 In principle, you may submit the listed requests one after another - usually, former requests collect any information needed for later ones.
 
-### for Developers ###
+### Requests for Developers ###
 
 #### Login ####
 
@@ -78,7 +78,7 @@ In principle, you may submit the listed requests one after another - usually, fo
 * **get customer storage entry**<br>
 * **delete customer storage entry**<br>
 
-### for Users ###
+### Requests for Customers ###
 
 #### Login ####
 
