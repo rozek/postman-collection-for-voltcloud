@@ -33,6 +33,8 @@ Now select the imported collection and navigate to tab "Variables". The variable
 * **developer_email_address**<br>set its `initial value` or `current value` (or both) to the email address you use to log into the VoltServer
 * **developer_password**<br>set its `current value` to your VoltServer password (note: set the `current value` only in order to avoid your password to accidentially leak to the Postman server or into any export file)
 
+**Nota bene**: do not forget to "Save" your entries afterwards or they will not be considered!
+
 ## Requests ##
 
 The requests found in this collection are grouped into those used by an application developer (who is also allowed to manage his/her customers and their key-value stores) and those used by a customer of a given application him/herself (which normally means that the application performs any requests on behalf of the - previously logged-in - customer)
@@ -47,11 +49,11 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 #### Application Management ####
 
-* **list applications**<br>
+* **list applications**<br>submit this request to get a (potentially empty) list of your currently registered applications (shown in the response pane for this request). If any of these applications has a name (aka "subdomain") starting with "postman-", the URL and id of that application will be saved for the following requests. If you do not have such an application, simply create one as shown below
+* **create new application**<br>this request registers a new application (and saves its id for further requests). Initially, the newly create application will have an arbitrary name (and URL) - for that reason, you should probably "update" it next
+* **update application**<br>this request changes one or multiple settings for an application given by its id. In this example, the request simply changes the application's name to something beginning with "postman-" and ending with a series of digits (denoting the crrent time stamp)
+* **upload application**<br>after creation, an application is still "empty", i.e., it contains no code. This request allows a developer to upload a ZIP archive containing all files that make up the actual application - including an `index.html` needed as the application's entry point. In this example, the ZIP archive just contains a simple dummy HTML file
 * **inspect application**<br>
-* **create new application**<br>
-* **update application**<br>
-* **upload application**<br>
 * **delete application**<br>
 
 #### Application Storage Management ####
