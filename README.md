@@ -67,6 +67,8 @@ Every application is associated with a key-value store, whose entries may be cre
 
 #### Customer Management ####
 
+A developer may associate an arbitrary number of users (aka "customers") with any registered application. These customers may register and login using their email address and a password. Internally, they are identified using an *id* which uniquely represents the combination of a customer and the application he/she registered for. As a consequence, the same email address may be used for multiple applications resulting in as many different user ids - even if the actual user is always the same
+
 * **list customers**<br>
 * **register customer**<br>
 * **resend customer confirmation email**<br>
