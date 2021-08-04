@@ -43,23 +43,66 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 #### Login ####
 
+* **login**<br>
+
 #### Application Management ####
+
+* **list applications**<br>
+* **inspect application**<br>
+* **create new application**<br>
+* **update application**<br>
+* **upload application**<br>
+* **delete application**<br>
 
 #### Application Storage Management ####
 
+* **list application storage entries**<br>
+* **create or update application storage entry**<br>
+* **get application storage entry**<br>
+* **delete application storage entry**<br>
+
 #### Customer Management ####
 
+* **list customers**<br>
+* **register customer**<br>
+* **resend customer confirmation email**<br>
+* **confirm customer**<br>
+* **start customer password reset**<br>
+* **reset customer password**<br>
+* **delete customer**<br>
+
 #### Customer Storage Management ####
+
+* **list customer storage entries**<br>
+* **create or update customer storage entry**<br>
+* **get customer storage entry**<br>
+* **delete customer storage entry**<br>
 
 ### for Users ###
 
 #### Login ####
 
+* **login customer**<br>
+
 #### Account Management ####
+
+* **get customer settings**<br>
+* **change customer email address**<br>
+* **change customer password**<br>
+* **change customer name**<br>
+* **delete customer**<br>
 
 #### Application Storage Management ####
 
+* **list application storage entries**<br>
+* **get application storage entry**<br>
+
 #### Customer Storage Management ####
+
+* **list customer storage entries**<br>
+* **create or update customer storage entry**<br>
+* **get customer storage entry**<br>
+* **delete customer storage entry**<br>
 
 ## License ##
 
