@@ -15,6 +15,6 @@ If you plan to use this collection, you should
 * have or create a [Postman Account](https://identity.getpostman.com/signup) (the [free plan](https://www.postman.com/pricing/) is sufficient),
 * download, install and use the [Postman desktop application](https://www.postman.com/downloads/) for your operating system, and
 * have or create a VoltCloud/VoltServer account (for historical reasons, this is bound to an [AppStudio subscription](https://www.nsbasic.com/i/Subscription/) - but don't worry: just think of getting two products for the price of one and simply ignore the other one).<br>&nbsp;<br>A free plan does not exist, but you may instead
-  * download the demo version of NSB/AppStudio and create a VoltCloud account for it or
+  * download the [demo version of NSB/AppStudio](https://www.nsbasic.com/app/downloads/) and create a VoltCloud account for it or
   * subscribe to NSB/AppStudio (do *not* choose the "one time" plan if you intend to use VoltCloud only) and use their "[30 day no hassle money back](https://wiki.appstudio.dev/NSB/App_Studio_FAQ#The_demo_period_has_expired.2C_but_I.27m_not_done_testing.)" guarantee if you decide not to use VoltCloud
 
