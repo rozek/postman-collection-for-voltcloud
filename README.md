@@ -19,3 +19,33 @@ If you plan to use this collection, you should
   * subscribe to NSB/AppStudio (do *not* choose the "one time" plan if you intend to use VoltCloud only) and use their "[30 day no hassle money back](https://wiki.appstudio.dev/NSB/App_Studio_FAQ#The_demo_period_has_expired.2C_but_I.27m_not_done_testing.)" guarantee if you decide not to use VoltCloud
 
 If you plan to use VoltCloud for an application with customers, it may also be worth reading their [legal notes](https://www.nsbasic.com/app/legal/legal.php).
+
+## Getting Started ##
+
+## Requests ##
+
+### for Developers ###
+
+#### Login ####
+
+#### Application Management ####
+
+#### Application Storage Management ####
+
+#### Customer Management ####
+
+#### Customer Storage Management ####
+
+### for Users ###
+
+#### Login ####
+
+#### Account Management ####
+
+#### Application Storage Management ####
+
+#### Customer Storage Management ####
+
+## License ##
+
+[MIT License](LICENSE.md)
