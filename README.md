@@ -49,12 +49,12 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 #### Application Management ####
 
-* **list applications**<br>submit this request to get a (potentially empty) list of your currently registered applications (shown in the response pane for this request). If any of these applications has a name (aka "subdomain") starting with "postman-", the URL and id of that application will be saved for the following requests. If you do not have such an application, simply create one as shown below
+* **list applications**<br>submit this request to get a (potentially empty) list of your currently registered applications together with their settings (shown in the response pane for this request). If any of these applications has a name (aka "subdomain") starting with "postman-", the URL and id of that application will be saved for the following requests. If you do not have such an application, simply create one as shown below
 * **create new application**<br>this request registers a new application (and saves its id for further requests). Initially, the newly create application will have an arbitrary name (and URL) - for that reason, you should probably "update" it next
 * **update application**<br>this request changes one or multiple settings for an application given by its id. In this example, the request simply changes the application's name to something beginning with "postman-" and ending with a series of digits (denoting the crrent time stamp)
 * **upload application**<br>after creation, an application is still "empty", i.e., it contains no code. This request allows a developer to upload a ZIP archive containing all files that make up the actual application - including an `index.html` needed as the application's entry point. In this example, the ZIP archive just contains a simple dummy HTML file
-* **inspect application**<br>
-* **delete application**<br>
+* **inspect application**<br>submit this request in order to get a summary of the settings for a single registered application, given by its id
+* **delete application**<br>this request unregisters a still registered application given by its id, but only if there are no customers associated with this application (otherwise you will have to delete every customer first). At the same time, any entries of the associated key-value store will also be removed. Note: this request is *not idempotent* - trying to delete an already deleted application will result in an error
 
 #### Application Storage Management ####
 
