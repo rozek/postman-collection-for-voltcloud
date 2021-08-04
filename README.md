@@ -22,6 +22,17 @@ If you plan to use VoltCloud for an application with customers, it may also be w
 
 ## Getting Started ##
 
+Assuming that Postman is already up and running, simply import the [collection](https://raw.githubusercontent.com/rozek/postman-collection-for-voltcloud/main/VoltCloud%20Collection.json) from this repository by inserting the URL
+
+&nbsp; `https://raw.githubusercontent.com/rozek/postman-collection-for-voltcloud/main/VoltCloud%20Collection.json`
+
+into tab "Link" within the "Import" dialog. Postman will validate the file behind the given URL and want you to select the contained collection before it is actually imported.
+
+Now select the imported collection and navigate to tab "Variables". The variables listed are those used by the various requests - many of them will be filled automatically upon receiving responses from the VoltCloud server, but two of them have to be explicitly set in order to get started
+
+* **developer_email_address**<br>set its `initial value` or `current value` (or both) to the email address you use to log into the VoltServer
+* **developer_password**<br>set its `current value` to your VoltServer password (note: set the `current value` only in order to avoid your password to accidentially leak to the Postman server or into any export file)
+
 ## Requests ##
 
 ### for Developers ###
