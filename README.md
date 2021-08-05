@@ -42,7 +42,7 @@ Finally, select the imported collection and navigate to tab "Variables". The var
 If you want to experiment with customer management, you should also configure a new customer:
 
 * **customer_email_address**<br>set its `initial value` or `current value` (or both) to the email address of your new customer
-* **customer_password**<br>set its `current value` to the intended password of your new customer. Because of restrictions implied by VoltCloud, the password must consist of 8 or more characters with at least one digit, one lower case and one upper case letter in order to be accepted
+* **customer_password**<br>set its `current value` to the intended password of your new customer. Because of restrictions implied by VoltCloud, the password must consist of 8 or more characters with at least one digit, one lower case letter and one upper case letter in order to be accepted
 * **customer_confirmation**<br>VoltCloud uses this setting to detect accidental typing errors in the password. Normally, you should set the `current value` of this variable to the same value as `customer_password` - unless you want to test the behaviour of VoltCloud in case of  mismatches
 
 **Nota bene**: do not forget to "Save" your entries afterwards or they will not be considered!
@@ -59,32 +59,32 @@ Many of the operations described below may be performed using the VoltCloud dash
 
 #### Login ####
 
-* **login developer**<br>just submit this request in order to authenticate yourself with the configured `developer_email_address` and `developer_password`. If successful, Postman will extract the `developer_access_token` needed to run all the other requests provided for developers
+* **login developer**<br>just submit this request in order to authenticate yourself with the configured `developer_email_address` and `developer_password`. If successful, Postman will extract your `developer_id` and the `developer_access_token` needed to run all the other requests provided for developers
 
 #### Application Management ####
 
-* **list applications**<br>submit this request to get a (potentially empty) list of your currently registered applications together with their settings (shown in the response pane for this request). If any of these applications has a name (aka "subdomain") starting with "postman-", the URL and id of that application will be saved for the following requests. If you do not have such an application, simply create one as shown below
-* **create new application**<br>this request registers a new application (and saves its id for further requests). Initially, the newly create application will have an arbitrary name (and URL) - for that reason, you should probably "update" it next
-* **update application**<br>this request changes one or multiple settings for an application given by its id. In this example, the request simply changes the application's name to something beginning with "postman-" and ending with a series of digits (denoting the crrent time stamp)
+* **list applications**<br>submit this request to get a (potentially empty) list of your currently registered applications together with their settings (shown in the response pane for this request). If any of these applications has a name (aka "subdomain") starting with "postman-", the URL and id of that application will be saved as `application_url` and `application_id` for the following requests. If you do not have such an application, simply create one as shown below
+* **create new application**<br>this request registers a new application (and saves its URL and its id in `application_url` and `application_id` for further requests). Initially, the newly create application will have an arbitrary name (and URL) - for that reason, you should probably "update" it next
+* **update application**<br>this request changes one or multiple settings for an application given by its id. In this example, the request simply changes the application's name to something beginning with "postman-" and ending with a series of digits (denoting the current time stamp). If successful, the new URL of the application is saved in `application_url` for further requests (the `application_id` remains unchanged)
 * **upload application**<br>after creation, an application is still "empty", i.e., it contains no code. This request allows a developer to upload a ZIP archive containing all files that make up the actual application - including an `index.html` needed as the application's entry point. In this example, the ZIP archive just contains a simple dummy HTML file
-* **inspect application**<br>submit this request in order to get a summary of the settings for a single registered application, given by its id
+* **inspect application**<br>submit this request in order to get a summary of the settings for a single registered application, given by `application_id`
 * **delete application**<br>this request unregisters a still registered application given by its id, but only if there are no more customers associated with this application (otherwise you will have to delete every customer first). At the same time, any entries of the associated key-value store will also be removed. Note: this request is *not idempotent* - trying to delete a non-existing application will result in an error
 
 #### Application Storage Management ####
 
 Every application is associated with a key-value store, whose entries may be created, read, written and deleted by the developer but only read by the application's customers. The following requests are those for the developer:
 
-* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all keys of the application store and their associated values
-* **create or update application storage entry**<br>this request associates a given value (a string) with a given key in the application's key-value store - if the specfied entry does not exist, it will be created 
-* **get application storage entry**<br>this request responds with a JSON string containing the value of a specific entry in the application's key-value store (given by its key). Trying to get the value of a non-existing key will result in an error
-* **delete application storage entry**<br>this requets deletes an entry (given by its key) from the application's key-value store. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
+* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all keys of the key-value store associated with an application given by `application_id` and their bound values. If the JSON object is not empty, an arbitrary key will be stored in `application_storage_key` for further requests - otherwise, `application_storage_key` will be set to "application-test"
+* **create or update application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and binds the key given by `application_storage_key` to a predefined value (derived from the current timestamp) - if the specfied entry does not exist, it will be created 
+* **get application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and responds with a JSON string containing the value the key given by `application_storage_key` is bound to. Trying to get the value of a non-existing key will result in an error
+* **delete application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and deletes the entry for the key given by `application_storage_key` together with the value that key is bound to. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
 
 #### Customer Management ####
 
-A developer may associate an arbitrary number of users (aka "customers") with any registered application. These customers may register and login using their email address and a password. Internally, they are identified using an *id* which uniquely represents the combination of a customer and the application he/she registered for. As a consequence, the same email address may be used for multiple applications resulting in as many different user ids - even if the actual user is always the same
+A developer may associate an arbitrary number of users (aka "customers") with any registered application. These customers may register and login using their email address and a password. Internally, they are identified using an *id* which uniquely represents the combination of a customer and the application he/she registered for. As a consequence, the same email address may be used for multiple applications resulting in as many different user ids - even if the actual person behind these users is always the same.
 
-* **list customers**<br>use this request to get a (potentially empty) list of all currently registered customers for a given application together with their settings
-* **register customer**<br>
+* **list customers**<br>use this request to get a (potentially empty) list of all currently registered customers (including with their settings) for the application given by `application_id`
+* **register customer**<br>this request registers a new customer with an email address given by `customer_email_address`, a password given by `customer_password` and its confirmation given by `customer_confirmation` for the application given by `application_id`. The request will fail, if the given customer already exists. If successful, the id of the newly registered customer will be stored in `customer_id`
 * **resend customer confirmation email**<br>
 * **confirm customer**<br>
 * **start customer password reset**<br>
