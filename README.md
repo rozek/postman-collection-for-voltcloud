@@ -49,7 +49,7 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 ### Requests for Developers ###
 
-Many of the operations described below may be performed using the VoltCloud dashboard. From time to time, however, it may be useful to bypass the dashboard (e.g., for automated application deployment) or to implement a server that needs access to the key-value store associated with an application and its customers
+Many of the operations described below may be performed using the VoltCloud dashboard. From time to time, however, it may be useful to bypass the dashboard (e.g., for automated application deployment outside of AppStudio) or to implement a server that needs access to the key-value store associated with an application and its customers
 
 #### Login ####
 
