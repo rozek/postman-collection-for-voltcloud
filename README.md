@@ -85,12 +85,28 @@ A developer may associate an arbitrary number of users (aka "customers") with an
 
 #### Customer Storage Management ####
 
+Nota bene: yes, as a developer you have insight into every customer's storage entries. With regard to data privacy, you may therefore consider encrypting any storage keys and entries within your application!
+
 * **list customer storage entries**<br>
 * **create or update customer storage entry**<br>
 * **get customer storage entry**<br>
 * **delete customer storage entry**<br>
 
 ### Requests for Customers ###
+
+The following requests will normally be submitted by an application on behalf of its user
+
+### Account Setup ###
+
+In order to sign up for an (application-specific) VoltCloud account, a customer should register, may ask for resending the confirmation email and should confirm his/her registration. In addition, he/she may ask for a password reset and perform that reset after having received the related email.
+
+The requests needed for these operations are the same as those mentioned for the developer, since no authentication is needed for them.
+
+* **register customer** (see "Customer Management" for Developers)
+* **resend customer confirmation email** (see "Customer Management" for Developers)
+* **confirm customer** (see "Customer Management" for Developers)
+* **start customer password reset** (see "Customer Management" for Developers)
+* **reset customer password** (see "Customer Management" for Developers)
 
 #### Login ####
 
