@@ -76,7 +76,7 @@ Many of the operations described below may be performed using the VoltCloud dash
 
 Every application is associated with a key-value store, whose entries may be created, read, written and deleted by the developer but only read by the application's customers. The following requests are those for the developer:
 
-* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries of the key-value store associated with the application given by `application_id` (this includes any keys and their bound values). If the JSON object is not empty, an arbitrary key from the set will be stored in `application_storage_key` for further requests - otherwise, `application_storage_key` will be set to "application-test"
+* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries in the key-value store associated with the application given by `application_id` (this includes any keys and their bound values). If the JSON object is not empty, an arbitrary key from the set will be stored in `application_storage_key` for further requests - otherwise, `application_storage_key` will be set to "application-test"
 * **create or update application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and binds the key given by `application_storage_key` to a predefined value (derived from the current timestamp) - if the specfied entry does not exist, it will be created 
 * **get application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and responds with a JSON string containing the value the key given by `application_storage_key` is bound to. Trying to get the value of a non-existing key will result in an error
 * **delete application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and deletes the entry for the key given by `application_storage_key` together with the value that key is bound to. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
@@ -97,18 +97,18 @@ Normally, a registered user should "confirm" his/her email address before being 
 
 #### Customer Storage Management ####
 
-Every registered customer has his/her own key-value store associated with the application he/she registered for. The following requests allow the application developer to manage these stores and their entries.
+Every registered customer has an own key-value store associated with the application he/she registered for. The following requests allow the application developer to manage these stores and their entries.
 
-Nota bene: yes, as a developer you have insight into every customer's storage entries. With regard to data privacy, you may therefore consider encrypting any storage keys and entries within your application!
+Nota bene: yes, as a developer you have insight into every customer's storage entries. With regard to data privacy (and to calm your customers), you may therefore consider encrypting any storage keys and entries within your application!
 
-* **list customer storage entries**<br>
-* **create or update customer storage entry**<br>
-* **get customer storage entry**<br>
-* **delete customer storage entry**<br>
+* **list customer storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries in the key-value store of the customer given by `customer_id` (this includes any keys and their bound values). Since `customer_id` is the id of a user who signed up for your application, the application itself does not have to be specified explicitly. If the received JSON object is not empty, an arbitrary key from the set will be stored in `customer_storage_key` for further requests - otherwise, `customer_storage_key` will be set to "customer-test"
+* **create or update customer storage entry**<br>>this request addresses the key-value store for the customer given by `customer_id` and binds the key given by `customer_storage_key` to a predefined value (derived from the current timestamp) - if the specfied entry does not exist, it will be created
+* **get customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and responds with a JSON string containing the value the key given by `customer_storage_key` is bound to. Trying to get the value of a non-existing key will result in an error
+* **delete customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and deletes the entry for the key given by `customer_storage_key` together with the value that key is bound to. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
 
 ### Requests for Customers ###
 
-The following requests will normally be submitted by an application on behalf of its user
+The following requests will normally be submitted by an application on behalf of its user.
 
 ### Account Setup ###
 
