@@ -138,15 +138,19 @@ For Customer Account and Storage Management to work, the customer has to log-in 
 
 #### Application Storage Management ####
 
-* **list application storage entries**<br>
-* **get application storage entry**<br>
+Every registered customer has read-only access to the key-value store the application he/she registered for is associated with. An application developer may use this store to publish some data to all users of the application.
+
+* **list application storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries in the key-value store associated with the application given by `application_id` (this includes any keys and their bound values). If the JSON object is not empty, an arbitrary key from the set will be stored in `application_storage_key` for further requests - otherwise, `application_storage_key` will be set to "application-test"
+* **get application storage entry**<br>this request addresses the key-value store for the application given by `application_id` and responds with a JSON string containing the value the key given by `application_storage_key` is bound to. Trying to get the value of a non-existing key will result in an error
 
 #### Customer Storage Management ####
 
-* **list customer storage entries**<br>
-* **create or update customer storage entry**<br>
-* **get customer storage entry**<br>
-* **delete customer storage entry**<br>
+Every registered customer has an own key-value store associated with the application he/she registered for. The following requests allow the customer to manage his/her store and its entries.
+
+* **list customer storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries in the key-value store of the customer given by `customer_id` (this includes any keys and their bound values). If the received JSON object is not empty, an arbitrary key from the set will be stored in `customer_storage_key` for further requests - otherwise, `customer_storage_key` will be set to "customer-test"
+* **create or update customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and binds the key given by `customer_storage_key` to a predefined value (derived from the current timestamp) - if the specfied entry does not exist, it will be created
+* **get customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and responds with a JSON string containing the value the key given by `customer_storage_key` is bound to. Trying to get the value of a non-existing key will result in an error
+* **delete customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and deletes the entry for the key given by `customer_storage_key` together with the value that key is bound to. Note: this request is *not idempotent* - trying to delete a non-existing entry will result in an error
 
 ## License ##
 
