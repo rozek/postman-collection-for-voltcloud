@@ -124,7 +124,9 @@ The requests needed for these operations are the same as those mentioned for the
 
 #### Login ####
 
-* **login customer**<br>
+For Customer Account and Storage Management to work, the customer has to log-in to the VoltCloud server using the email address and password configured for his/her account (the email address must have been confirmed before or the login will fail). As a result, the application will receive an "access token" which will have to be sent back to the server as part of any further request in order to authenticate it.
+
+* **login customer**<br>submit this request in order to authenticate the customer with the configured `customer_email_address` and `customer_password` who registered for an application with the id `application_id` - the email address must have been confirmed before or the login will fail. If successful, Postman will extract the `customer_id` and the `customer_access_token` needed to run any requests listed under "Account Management" or "Application/Customer Storage Management"
 
 #### Account Management ####
 
