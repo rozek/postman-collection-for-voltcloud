@@ -97,6 +97,8 @@ Normally, a registered user should "confirm" his/her email address before being 
 
 #### Customer Storage Management ####
 
+Every registered customer has his/her own key-value store associated with the application he/she registered for. The following requests allow the application developer to manage these stores and their entries.
+
 Nota bene: yes, as a developer you have insight into every customer's storage entries. With regard to data privacy, you may therefore consider encrypting any storage keys and entries within your application!
 
 * **list customer storage entries**<br>
