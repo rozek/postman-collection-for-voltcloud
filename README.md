@@ -97,7 +97,7 @@ Normally, a registered user should "confirm" his/her email address before being 
 
 #### Customer Storage Management ####
 
-Every registered customer has an own key-value store associated with the application he/she registered for. The following requests allow the application developer to manage these stores and their entries.
+Every registered customer has his/her own key-value store associated with the application he/she registered for. The following requests allow the application developer to manage these stores and their entries.
 
 Nota bene: yes, as a developer you have insight into every customer's storage entries. With regard to data privacy (and to calm your customers), you may therefore consider encrypting any storage keys and entries within your application!
 
@@ -145,7 +145,7 @@ Every registered customer has read-only access to the key-value store the applic
 
 #### Customer Storage Management ####
 
-Every registered customer has an own key-value store associated with the application he/she registered for. The following requests allow the customer to manage his/her store and its entries.
+Every registered customer has his/her own key-value store associated with the application he/she registered for. The following requests allow the customer to manage his/her store and its entries.
 
 * **list customer storage entries**<br>this request responds with a (potentially empty) JSON object containing all entries in the key-value store of the customer given by `customer_id` (this includes any keys and their bound values). If the received JSON object is not empty, an arbitrary key from the set will be stored in `customer_storage_key` for further requests - otherwise, `customer_storage_key` will be set to "customer-test"
 * **create or update customer storage entry**<br>this request addresses the key-value store for the customer given by `customer_id` and binds the key given by `customer_storage_key` to a predefined value (derived from the current timestamp) - if the specfied entry does not exist, it will be created
