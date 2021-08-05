@@ -39,6 +39,12 @@ Finally, select the imported collection and navigate to tab "Variables". The var
 * **developer_email_address**<br>set its `initial value` or `current value` (or both) to the email address you use to log into the VoltServer
 * **developer_password**<br>set its `current value` to your VoltServer password (note: set the `current value` only in order to avoid your password to accidentially leak to the Postman server or into any export file)
 
+If you want to experiment with customer management, you should also configure a new customer:
+
+* **customer_email_address**<br>set its `initial value` or `current value` (or both) to the email address of your new customer
+* **customer_password**<br>set its `current value` to the intended password of your new customer. Because of restrictions implied by VoltCloud, the password must consist of 8 or more characters with at least one digit, one lower case and one upper case letter in order to be accepted
+* **customer_confirmation**<br>VoltCloud uses this setting to detect accidental typing errors in the password. Normally, you should set the `current value` of this variable to the same value as `customer_password` - unless you want to test the behaviour of VoltCloud in case of  mismatches
+
 **Nota bene**: do not forget to "Save" your entries afterwards or they will not be considered!
 
 ## Requests ##
@@ -77,7 +83,7 @@ Every application is associated with a key-value store, whose entries may be cre
 
 A developer may associate an arbitrary number of users (aka "customers") with any registered application. These customers may register and login using their email address and a password. Internally, they are identified using an *id* which uniquely represents the combination of a customer and the application he/she registered for. As a consequence, the same email address may be used for multiple applications resulting in as many different user ids - even if the actual user is always the same
 
-* **list customers**<br>
+* **list customers**<br>use this request to get a (potentially empty) list of all currently registered customers for a given application together with their settings
 * **register customer**<br>
 * **resend customer confirmation email**<br>
 * **confirm customer**<br>
