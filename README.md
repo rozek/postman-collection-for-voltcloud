@@ -49,6 +49,8 @@ In principle, you may submit the listed requests one after another - usually, fo
 
 ### Requests for Developers ###
 
+Many of the operations described below may be performed using the VoltCloud dashboard. From time to time, however, it may be useful to bypass the dashboard (e.g., for automated application deployment) or to implement a server that needs access to the key-value store associated with an application and its customers
+
 #### Login ####
 
 * **login developer**<br>just submit this request in order to authenticate yourself with the configured `developer_email_address` and `developer_password`. If successful, Postman will extract the `developer_access_token` needed to run all the other requests provided for developers
