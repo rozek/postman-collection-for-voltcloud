@@ -28,7 +28,13 @@ Assuming that Postman is already up and running, simply import the [collection](
 
 into tab "Link" within the "Import" dialog. Postman will validate the file behind the given URL and want you to select the contained collection before it is actually imported.
 
-Now select the imported collection and navigate to tab "Variables". The variables listed are those used by the various requests - many of them will be filled automatically upon receiving responses from the VoltCloud server, but two of them have to be explicitly set in order to get started
+One of the requests from the imported collection wants to upload a file to the VoltCloud server. In order to prepare this file, define a "working directory" in Postman by navigating to "Settings" > "General" and "Choose" the desired folder in section "Working directory". Next, download file "Postman-Dummy.zip" found at
+
+&nbsp; [https://github.com/rozek/postman-collection-for-voltcloud/blob/main/Postman-Dummy.zip?raw=true](https://github.com/rozek/postman-collection-for-voltcloud/blob/main/Postman-Dummy.zip?raw=true)
+
+into that directory.
+
+Finally, select the imported collection and navigate to tab "Variables". The variables listed are those used by the various requests - many of them will be filled automatically upon receiving responses from the VoltCloud server, but two of them have to be explicitly set in order to get started
 
 * **developer_email_address**<br>set its `initial value` or `current value` (or both) to the email address you use to log into the VoltServer
 * **developer_password**<br>set its `current value` to your VoltServer password (note: set the `current value` only in order to avoid your password to accidentially leak to the Postman server or into any export file)
