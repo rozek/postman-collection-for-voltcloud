@@ -102,11 +102,11 @@ In order to sign up for an (application-specific) VoltCloud account, a customer 
 
 The requests needed for these operations are the same as those mentioned for the developer, since no authentication is needed for them.
 
-* **register customer** (see "Customer Management" for Developers)
-* **resend customer confirmation email** (see "Customer Management" for Developers)
-* **confirm customer** (see "Customer Management" for Developers)
-* **start customer password reset** (see "Customer Management" for Developers)
-* **reset customer password** (see "Customer Management" for Developers)
+* **register customer** - see "Customer Management" for Developers
+* **resend customer confirmation email** - see "Customer Management" for Developers
+* **confirm customer** - see "Customer Management" for Developers
+* **start customer password reset** - see "Customer Management" for Developers
+* **reset customer password** - see "Customer Management" for Developers
 
 #### Login ####
 
