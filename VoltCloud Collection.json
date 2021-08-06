@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "02318103-c1f9-4a56-af8b-1e6c4fff0781",
 		"name": "VoltCloud Collection",
+		"description": "a description of all requests and variables in this collection may be found on [GitHub](https://github.com/rozek/postman-collection-for-voltcloud)",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -251,7 +252,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"subdomain\": \"postman-{{$timestamp}}\"\n}",
+									"raw": "{\n  \"subdomain\": \"postman-{{$timestamp}}\",\n  \"confirmation_url\": \"/#/confirm/{{token}}\",\n  \"reset_url\": \"/#/reset/{{token}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -306,14 +307,9 @@
 											"key": "file",
 											"contentType": "application/zip",
 											"type": "file",
-											"src": "/Users/andreas/Downloads/Postman-Dummy.zip"
+											"src": "Postman-Dummy.zip"
 										}
-									],
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
+									]
 								},
 								"url": {
 									"raw": "{{dashboard_url}}/api/app/{{application_id}}/version",
@@ -1283,6 +1279,10 @@
 									"listen": "test",
 									"script": {
 										"exec": [
+											"if (pm.response.code === 200) {",
+											"  let newPassword = pm.collectionVariables.get('customer_new_password')",
+											"  pm.collectionVariables.set('customer_password', newPassword)",
+											"}",
 											""
 										],
 										"type": "text/javascript"
@@ -1304,7 +1304,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"password\": {\n    \"old\": \"{{customer_password}}\",\n    \"new\": \"{{customer_password}}\",\n    \"confirmation\": \"{{customer_confirmation}}\"\n  }\n}",
+									"raw": "{\n  \"password\": {\n    \"old\": \"{{customer_password}}\",\n    \"new\": \"{{customer_new_password}}\",\n    \"confirmation\": \"{{customer_confirmation}}\"\n  }\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1811,6 +1811,10 @@
 		},
 		{
 			"key": "customer_reset_token",
+			"value": ""
+		},
+		{
+			"key": "customer_new_password",
 			"value": ""
 		},
 		{
