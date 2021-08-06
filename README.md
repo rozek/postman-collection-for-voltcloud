@@ -128,11 +128,13 @@ For Customer Account and Storage Management to work, the customer has to log-in 
 
 #### Account Management ####
 
-* **get customer settings**<br>
-* **change customer email address**<br>
-* **change customer password**<br>
-* **change customer name**<br>
-* **delete customer**<br>
+The following requests allow customers to inspect their own settings and change them. For those requests to work, the customer must have logged-in before and received a "token" to authenticate any request (in this collection, that token is taken from variable `customer_access_token`)
+
+* **get customer settings**<br>this request responds with a JSON object containing any current settings (except password) for the customer given by `customer_id`
+* **change customer email address**<br>this request allows a customer given by `customer_id` to change his/her email address to a new value given by `customer_email_address`. The new email address must not have been registered before or the request will fail. Surprisingly, *the new email address does not have to be confirmed and no confirmation mail will be sent to the new address*
+* **change customer password**<br>this request changes the current password (given by `customer_password`) of a customer given by `customer_id` to a new value (given by `customer_new_password` and confirmed by `customer_confirmation`). The new password must adhere to the VoltCloud password rules, but both old and new password may be identical
+* **change customer name**<br>this request may be used to define the actual name of a customer given by `customer_id` (in this collection, the new values have been hard-coded into the request body)
+* **delete customer**<br>this request allows a customer given by `customer_id` to unregister him/herself. Note: this request is *not idempotent* - trying to delete a non-existing customer will result in an error
 
 #### Application Storage Management ####
 
