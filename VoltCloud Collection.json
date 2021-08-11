@@ -1858,6 +1858,47 @@
 								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
 							},
 							"response": []
+						},
+						{
+							"name": "clear customer storage",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{application_url}}/api/storage/{{customer_id}}",
+									"host": [
+										"{{application_url}}"
+									],
+									"path": [
+										"api",
+										"storage",
+										"{{customer_id}}"
+									]
+								},
+								"description": "see [VoltCloud Docs](https://docs.voltcloud.io/api/#authentication-login-post) for a description of this request"
+							},
+							"response": []
 						}
 					]
 				}
