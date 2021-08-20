@@ -899,7 +899,7 @@
 							"response": []
 						},
 						{
-							"name": "(get customer settings)",
+							"name": "get customer settings",
 							"event": [
 								{
 									"listen": "test",
@@ -917,7 +917,7 @@
 									"bearer": [
 										{
 											"key": "token",
-											"value": "{{devloper_access_token}}",
+											"value": "{{developer_access_token}}",
 											"type": "string"
 										}
 									]
